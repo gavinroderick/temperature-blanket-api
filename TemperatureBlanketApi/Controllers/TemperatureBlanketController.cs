@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using TemperatureBlanketApi.Interfaces;
 using TemperatureBlanketApi.Services;
 
 namespace TemperatureBlanketApi.Controllers;
@@ -14,9 +15,10 @@ public class TemperatureBlanketController : ControllerBase
         _blanketService = blanketService;
     }
 
-    [HttpGet(Name = "GetBlanket")]
-    public IActionResult GetBlanket()
+    [HttpGet("GetDummyBlanket")]
+    public IActionResult GetDummyBlanket()
     {
-        return Ok(_blanketService.GetDummyBlanket());
+        return Ok(_blanketService.CreateDummyBlanket());
     }
+
 }

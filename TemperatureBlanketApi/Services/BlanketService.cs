@@ -5,36 +5,34 @@ namespace TemperatureBlanketApi.Services;
 
 public class BlanketService : IBlanketService
 {
-    public string GetDummyBlanket()
+    public Blanket CreateDummyBlanket()
     {
-        return data;
+        return new Blanket(Guid.NewGuid(),
+            CreateRandomYear(),
+            new BlanketOwner(Guid.NewGuid(), "Gavin Roderick", "gavin@gmail.com"),
+            new BlanketMetaData(DateTime.UtcNow, "Leith, Edinburgh", "55.9755 N", "3.1665 W")
+        );
     }
 
-    //TODO - this is awful, read it from a json file like a normal person
-    private const string data = @"{
-                            ""blankets"": {
-                                ""d244a1d5-8b03-4db7-81b2-2e5065319bc2"": {
-                                    ""blanketOwner"": {
-                                        ""id"": ""d244a1d5-8b03-4db7-81b2-2e5065319bc2"",
-                                        ""name"": ""Gavin"",
-                                        ""emailAddress"": ""gavin @gmail.com""
-                                    },
-                                    ""dateCreated"": ""2022-07-11 16:46:00Z"",
-                                    ""blanketName"": ""Gavin's Temp Blanket"",
-                                    ""locationName"": ""Leith, Edinburgh"",
-                                    ""lattitude"": ""55.9755 N"",
-                                    ""longitude"": ""3.1665 W"",
-                                    ""colors"": {
-                                        ""#ffffff"": {
-                                            ""name"": ""my white colour"",
-                                            ""min"": 0,
-                                            ""max"": 10
-                                        }
-                                    },
-                                    ""weeks"": {
-                                        ""1"": [1.1, 2.2, 3.3, 4.4, 5.5, 6.6, 7.7]
-                                    }
-                                }
-                            }
-                           }";
+    private static List<Week> CreateRandomYear()
+    {
+        var year = new List<Week>(52);
+        for (var i = 0; i < 52; i++)
+        {
+            year.Add(new Week(i + 1, CreateRandomWeek(0, 35)));
+        }
+        return year;
+    }
+
+    private static double[] CreateRandomWeek(int minTemperature, int maxTemperature)
+    {
+        var week = new double[7];
+        for (var i = 0; i < 7; i++)
+        {
+            var nextDouble = Random.Shared.NextDouble();
+            nextDouble *= (maxTemperature - minTemperature) + minTemperature;
+            week[i] = Math.Round(nextDouble, 2);
+        }
+        return week;
+    }
 }
