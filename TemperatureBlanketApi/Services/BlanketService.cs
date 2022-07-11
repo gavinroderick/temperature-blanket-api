@@ -1,3 +1,6 @@
+using TemperatureBlanketApi.Interfaces;
+using TemperatureBlanketApi.Models;
+
 namespace TemperatureBlanketApi.Services;
 
 public class BlanketService : IBlanketService
@@ -35,9 +38,3 @@ public class BlanketService : IBlanketService
                             }
                            }";
 }
-
-public interface IBlanketService
-{ 
-    string GetDummyBlanket();
-}
- 

@@ -1,3 +1,4 @@
+using TemperatureBlanketApi.Interfaces;
 using TemperatureBlanketApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
